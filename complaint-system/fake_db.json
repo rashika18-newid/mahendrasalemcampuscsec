@@ -1,0 +1,165 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "name": "Gill",
+            "email": "gill@college.edu",
+            "password": "Student@123",
+            "role": "student"
+        },
+        {
+            "id": 2,
+            "name": "Student User",
+            "email": "student@college.edu",
+            "password": "Student@123",
+            "role": "student"
+        },
+        {
+            "id": 999,
+            "name": "Administrator",
+            "email": "admin@college.edu",
+            "password": "Admin@123",
+            "role": "admin"
+        }
+    ],
+    "complaints": [
+        {
+            "id": 1,
+            "user_id": 2,
+            "user_name": "Student User",
+            "category": "Academics",
+            "subject": "zddfgty",
+            "location": "Block A",
+            "description": "My academic complaint",
+            "status": "Pending",
+            "created_at": "2026-10-09 22:36:00",
+            "admin_response": "",
+            "history": []
+        },
+        {
+            "id": 2,
+            "user_id": 2,
+            "user_name": "Student User",
+            "category": "Hostel",
+            "subject": "sapadu problem",
+            "location": "Hostel Block",
+            "description": "Food issue in hostel",
+            "status": "Pending",
+            "created_at": "2026-10-09 22:37:00",
+            "admin_response": "args",
+            "history": [
+                {
+                    "status": "Pending",
+                    "comment": "args",
+                    "at": "2026-10-10 14:43:12",
+                    "by": "Administrator"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "user_id": 2,
+            "user_name": "Student User",
+            "category": "Hostel",
+            "subject": "tyklkjhuioplakdjisd",
+            "location": "jkdfijsd\/f\/sdlf\/",
+            "description": "jhsdkfi;iskfjsdof",
+            "status": "Pending",
+            "created_at": "2026-10-09 22:36:00",
+            "admin_response": "",
+            "history": []
+        },
+        {
+            "id": 4,
+            "user_id": 2,
+            "user_name": "Student User",
+            "category": "Academics",
+            "subject": "reegan",
+            "location": "salem",
+            "description": "cd \/home\/workspace\/my-project\/complaint-system\r\npkill -9 php\r\n\r\ncat > fake_db.json << 'JSON'\r\n{\r\n  \"users\": [\r\n    {\"id\": 1, \"name\": \"Gill\", \"email\": \"gill@college.edu\", \"password\": \"Student@123\", \"role\": \"student\"},\r\n    {\"id\": 2, \"name\": \"Student User\", \"email\": \"student@college.edu\", \"password\": \"Student@123\", \"role\": \"student\"},\r\n    {\"id\": 999, \"name\": \"Administrator\", \"email\": \"admin@college.edu\", \"password\": \"Admin@123\", \"role\": \"admin\"}\r\n  ],\r\n  \"complaints\": [\r\n    {\"id\": 1, \"user_id\": 2, \"user_name\": \"Student User\", \"category\": \"Academics\", \"subject\": \"zddfgty\", \"location\": \"Block A\", \"description\": \"My academic complaint\", \"status\": \"Pending\", \"created_at\": \"2026-10-09 22:36:00\", \"admin_response\": \"\", \"history\": []},\r\n    {\"id\": 2, \"user_id\": 2, \"user_name\": \"Student User\", \"category\": \"Hostel\", \"subject\": \"sapadu problem\", \"location\": \"Hostel Block\", \"description\": \"Food issue in hostel\", \"status\": \"Closed\", \"created_at\": \"2026-10-09 22:37:00\", \"admin_response\": \"\", \"history\": []},\r\n    {\"id\": 3, \"user_id\": 2, \"user_name\": \"Student User\", \"category\": \"Hostel\", \"subject\": \"tyklkjhuioplakdjisd\", \"location\": \"jkdfijsd\/f\/sdlf\/\", \"description\": \"jhsdkfi;iskfjsdof\", \"status\": \"Pending\", \"created_at\": \"2026-10-09 22:36:00\", \"admin_response\": \"\", \"history\": []}\r\n  ]\r\n}\r\nJSON\r\n\r\ncat > login.php << 'PHP'\r\n<?php\r\nsession_start();\r\n$err='';\r\nif($_SERVER['REQUEST_METHOD']=='POST'){\r\n $email=trim(strtolower($_POST['email']??''));\r\n $pass=trim($_POST['password']??'');\r\n $data=json_decode(file_get_contents(__DIR__.'\/fake_db.json'),true);\r\n $found=null;\r\n foreach($data['users'] as $u){\r\n   if(strtolower($u['email'])==$email && $u['password']==$pass){ $found=$u; break; }\r\n }\r\n if($found){\r\n  $_SESSION['user_id']=$found['id'];\r\n  $_SESSION['user_name']=$found['name'];\r\n  $_SESSION['role']=$found['role'];\r\n  $_SESSION['email']=$found['email'];\r\n  if($found['role']=='admin'){\r\n    header('Location: admin_dashboard.php'); exit;\r\n  } else {\r\n    header('Location: dashboard.php'); exit;\r\n  }\r\n } else {\r\n  $err='Invalid login. Use student@college.edu \/ Student@123 for student';\r\n }\r\n}\r\n?>\r\n<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Login - ResolveDesk<\/title><link href=\"https:\/\/fonts.googleapis.com\/css2?family=Inter:wght@400;600;700&display=swap\" rel=\"stylesheet\">\r\n<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,sans-serif;background:#f1f4f9;display:flex;align-items:center;justify-content:center;min-height:100vh}.card{background:#fff;border-radius:16px;padding:28px;width:100%;max-width:360px;border:1px solid #eef0f4;box-shadow:0 4px 20px rgba(0,0,0,.06)}input{width:100%;padding:11px;border:1px solid #e5e7eb;border-radius:10px;margin-top:6px;font-size:13px}label{font-size:12px;font-weight:600;margin-top:12px;display:block}.btn{width:100%;padding:12px;background:#5a4cf1;color:#fff;border:0;border-radius:10px;font-weight:600;margin-top:16px;cursor:pointer}.demo{margin-top:14px;font-size:11px;color:#6b7280;background:#f9fafb;padding:10px;border-radius:8px;line-height:1.5}<\/style><\/head><body>\r\n<div class=\"card\">\r\n<div style=\"text-align:center;margin-bottom:16px\"><div style=\"width:44px;height:44px;background:#5a4cf1;border-radius:12px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;color:#fff\">\ud83d\udcac<\/div><div style=\"font-weight:800;font-size:18px\">ResolveDesk<\/div><div style=\"font-size:12px;color:#6b7280\">College Complaints<\/div><\/div>\r\n<?php if($err) echo '<div style=\"background:#fef2f2;color:#991b1b;padding:8px;border-radius:8px;font-size:12px;margin-bottom:10px\">'.$err.'<\/div>'; ?>\r\n<form method=\"POST\"><label>Email<\/label><input type=\"email\" name=\"email\" required value=\"student@college.edu\"><label>Password<\/label><input type=\"password\" name=\"password\" required value=\"Student@123\"><button class=\"btn\">Login as Student<\/button><\/form>\r\n<div class=\"demo\"><b>\ud83c\udf93 Student Login:<\/b><br>student@college.edu \/ Student@123<br>gill@college.edu \/ Student@123<br><br><b>\ud83d\udee1\ufe0f Admin Login:<\/b><br>admin@college.edu \/ Admin@123<\/div>\r\n<\/div><\/body><\/html>\r\nPHP\r\n\r\ncat > dashboard.php << 'PHP'\r\n<?php\r\nsession_start();\r\nif(!isset($_SESSION['user_id'])){ header('Location: login.php'); exit; }\r\nif(($_SESSION['role']??'')=='admin'){ header('Location: admin_dashboard.php'); exit; }\r\n$data=json_decode(file_get_contents(__DIR__.'\/fake_db.json'),true);\r\n$uid=$_SESSION['user_id']; $my=[]; foreach($data['complaints'] as $c){ if($c['user_id']==$uid) $my[]=$c; }\r\n$total=count($my); $pend=0; $prog=0; $res=0;\r\nforeach($my as $c){ $s=strtolower($c['status']); if($s=='pending')$pend++; if($s=='in progress')$prog++; if($s=='resolved'||$s=='closed')$res++; }\r\n?>\r\n<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>Student Dashboard<\/title><link href=\"https:\/\/fonts.googleapis.com\/css2?family=Inter:wght@400;600;700&display=swap\" rel=\"stylesheet\">\r\n<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,sans-serif;background:#f1f4f9;display:flex;min-height:100vh}.sidebar{width:236px;background:#0e0f2a;color:#9ca3af;padding:12px 10px;display:flex;flex-direction:column}.m-item{display:flex;gap:10px;padding:9px 11px;border-radius:10px;color:rgba(255,255,255,.5);text-decoration:none;font-size:12.5px;margin-bottom:2px}.m-item.active{background:#5a4cf1;color:#fff}.main{flex:1}.topbar{padding:12px 18px;background:#fff;border-bottom:1px solid #e9ecf2}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:14px 18px}.card{background:#fff;border-radius:14px;padding:14px;border:1px solid #eef0f4}.recent{margin:0 18px;background:#fff;border-radius:14px;border:1px solid #eef0f4;padding:14px}<\/style><\/head><body>\r\n<div class=\"sidebar\"><div style=\"padding:6px 8px;display:flex;gap:10px\"><div style=\"width:32px;height:32px;background:#6366f1;border-radius:9px;display:flex;align-items:center;justify-content:center;color:#fff\">\ud83d\udcac<\/div><div><div style=\"font-weight:700;color:#fff;font-size:13px\">ResolveDesk<\/div><div style=\"font-size:10px;opacity:.6\">Student Portal<\/div><\/div><\/div><div style=\"margin:12px 6px;background:rgba(255,255,255,.08);border-radius:10px;padding:10px 12px;display:flex;gap:8px;align-items:center;color:#fff;font-size:12px;font-weight:600\">\ud83c\udf93 <?php echo htmlspecialchars($_SESSION['user_name']); ?><\/div><div style=\"margin-top:10px\"><a class=\"m-item active\">\u25ce Dashboard<\/a><a class=\"m-item\" href=\"submit_complaint.php\">\ud83d\udcdd Submit Complaint<\/a><a class=\"m-item\" href=\"my_complaints.php\">\ud83d\udccb My Complaints (<?php echo $total; ?>)<\/a><a class=\"m-item\" href=\"logout.php\">\u21aa Logout<\/a><\/div><\/div>\r\n<div class=\"main\"><div class=\"topbar\"><div><div style=\"font-weight:800;font-size:16px\">Student Dashboard<\/div><div style=\"font-size:11px;color:#6b7280\">Welcome <?php echo htmlspecialchars($_SESSION['user_name']); ?> - Track your complaints<\/div><\/div><\/div><div class=\"cards\"><div class=\"card\"><div style=\"font-size:10px;color:#6b7280;font-weight:600\">TOTAL<\/div><div style=\"font-size:22px;font-weight:800;margin-top:4px\"><?php echo $total; ?><\/div><\/div><div class=\"card\"><div style=\"font-size:10px;color:#6b7280;font-weight:600\">PENDING<\/div><div style=\"font-size:22px;font-weight:800;margin-top:4px;color:#d97706\"><?php echo $pend; ?><\/div><\/div><div class=\"card\"><div style=\"font-size:10px;color:#6b7280;font-weight:600\">RESOLVED<\/div><div style=\"font-size:22px;font-weight:800;margin-top:4px;color:#16a34a\"><?php echo $res; ?><\/div><\/div><\/div><div class=\"recent\"><div style=\"font-weight:700;font-size:13px;margin-bottom:10px\">Recent Complaints<\/div><?php foreach(array_slice(array_reverse($my),0,3) as $c){ echo '<div style=\"padding:10px 0;border-bottom:1px solid #f3f4f6;display:flex;justify-content:space-between\"><div><b>CMP-'.str_pad($c['id'],6,'0',STR_PAD_LEFT).'<\/b> - '.htmlspecialchars($c['subject']).'<div style=\"font-size:11px;color:#6b7280\">'.$c['status'].' \u00b7 '.$c['category'].'<\/div><\/div><a href=\"complaint_details.php?id='.$c['id'].'\" style=\"font-size:11px;color:#4f46e5;text-decoration:none;font-weight:600\">View<\/a><\/div>'; } ?><\/div><\/div><\/body><\/html>\r\nPHP\r\n\r\nnohup php -S 0.0.0.0:8080 -t \/home\/workspace\/my-project\/complaint-system > \/tmp\/s.log 2>&1 & sleep 2\r\necho \"FIXED! Student login will now go to STUDENT dashboard\"",
+            "status": "Resolved",
+            "created_at": "2026-10-10 04:28:04",
+            "admin_response": "args",
+            "history": [
+                {
+                    "status": "Resolved",
+                    "comment": "args",
+                    "at": "2026-10-10 04:29:01",
+                    "by": "Administrator"
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "user_id": 2,
+            "user_name": "Student User",
+            "category": "Hostel",
+            "subject": "food",
+            "location": "salem",
+            "description": "cd \/home\/workspace\/my-project\/complaint-system\r\npkill -9 php; sleep 2\r\nnohup php -S 0.0.0.0:8080 -t \/home\/workspace\/my-project\/complaint-system > \/tmp\/s.log 2>&1 &\r\nsleep 2\r\ncat \/tmp\/s.log\r\necho \"--------------------------------\"\r\necho \"LINK READY DA:\"\r\necho \"https:\/\/805bc702ab0e-0af412bf-5300.ws6.app\/proxy\/8080\/\"\r\nls -lh *.php | head -20\r\n\r\n\r\nRoleEmailPasswordAdminadmin@college.eduAdmin@123Studentstudent@college.eduStudent@123cd \/home\/workspace\/my-project\/complaint-system\r\npkill -9 php; sleep 2\r\nnohup php -S 0.0.0.0:8080 -t \/home\/workspace\/my-project\/complaint-system > \/tmp\/s.log 2>&1 &\r\nsleep 2\r\ncat \/tmp\/s.log\r\necho \"--------------------------------\"\r\necho \"LINK READY DA:\"\r\necho \"https:\/\/805bc702ab0e-0af412bf-5300.ws6.app\/proxy\/8080\/\"\r\nls -lh *.php | head -20\r\n\r\n\r\nRoleEmailPasswordAdminadmin@college.eduAdmin@123Studentstudent@college.eduStudent@123cd \/home\/workspace\/my-project\/complaint-system\r\npkill -9 php; sleep 2\r\nnohup php -S 0.0.0.0:8080 -t \/home\/workspace\/my-project\/complaint-system > \/tmp\/s.log 2>&1 &\r\nsleep 2\r\ncat \/tmp\/s.log\r\necho \"--------------------------------\"\r\necho \"LINK READY DA:\"\r\necho \"https:\/\/805bc702ab0e-0af412bf-5300.ws6.app\/proxy\/8080\/\"\r\nls -lh *.php | head -20\r\n\r\n\r\nRoleEmailPasswordAdminadmin@college.eduAdmin@123Studentstudent@college.eduStudent@123",
+            "status": "Resolved",
+            "created_at": "2026-10-10 14:43:51",
+            "admin_response": "args",
+            "history": [
+                {
+                    "status": "Resolved",
+                    "comment": "args",
+                    "at": "2026-10-10 14:44:36",
+                    "by": "Administrator"
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "user_id": 2,
+            "user_name": "Student User",
+            "category": "Transport",
+            "subject": "college management  related",
+            "location": "salem",
+            "description": "cd \/home\/workspace\/my-project\/complaint-system\r\n\r\n# Force JSON mode - MySQL extension check pannama\r\ncat > config\/database.php << 'PHP'\r\n<?php\r\n\/\/ AUTO MODE: If mysqli exists -> MySQL, else -> JSON (Secure with bcrypt)\r\n$pdo = null;\r\n$use_mysql = extension_loaded('pdo_mysql');\r\nif($use_mysql){\r\n  $host='localhost'; $db='db_455fprc7h'; $user='root'; $pass=''; $charset='utf8mb4';\r\n  $dsn=\"mysql:host=$host;dbname=$db;charset=$charset\";\r\n  $options=[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE=>PDO::FETCH_ASSOC];\r\n  try{ $pdo=new PDO($dsn,$user,$pass,$options); }catch(Exception $e){ $use_mysql=false; }\r\n}\r\n?>\r\nPHP\r\n\r\n# Check fake_db.json secure ah irukka?\r\nphp -r \"\r\n\\$d=json_decode(file_get_contents('fake_db.json'),true);\r\necho '\u2705 Users: '.count(\\$d['users']).' (hashed passwords)'.PHP_EOL;\r\necho '\u2705 Complaints: '.count(\\$d['complaints']).PHP_EOL;\r\n\"\r\n\r\n# Server start\r\npkill -9 php; sleep 1\r\nnohup php -S 0.0.0.0:8080 -t \/home\/workspace\/my-project\/complaint-system > \/tmp\/s.log 2>&1 &\r\nsleep 2\r\necho \"\u2705 SERVER READY - JSON SECURE MODE\"\r\necho \"\ud83d\udd17 https:\/\/3908ff2bb0ec-0af412bf-5300.ws6.app\/proxy\/8080\/login.php\"\r\necho \"\"\r\necho \"Login:\"\r\necho \"student@college.edu \/ Student@123\"\r\necho \"admin@college.edu \/ Admin@123\"",
+            "status": "Resolved",
+            "created_at": "2026-10-12 10:06:53",
+            "admin_response": "ok dear",
+            "history": [
+                {
+                    "status": "Resolved",
+                    "comment": "ok dear",
+                    "at": "2026-10-12 10:07:28",
+                    "by": "Administrator"
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "user_id": 2,
+            "user_name": "Student User",
+            "category": "Library",
+            "subject": "college management  related issues",
+            "location": "salem",
+            "description": "000006\tcollege management related000006\tcollege management related000006\tcollege management related000006\tcollege management related000006\tcollege management related",
+            "status": "Resolved",
+            "created_at": "2026-10-12 10:15:47",
+            "admin_response": "ok dear",
+            "history": [
+                {
+                    "status": "Resolved",
+                    "comment": "ok dear",
+                    "at": "2026-10-12 10:16:15",
+                    "by": "Administrator"
+                },
+                {
+                    "status": "Resolved",
+                    "comment": "",
+                    "at": "2026-10-12 10:16:18",
+                    "by": "Administrator"
+                },
+                {
+                    "status": "Resolved",
+                    "comment": "",
+                    "at": "2026-10-12 10:16:20",
+                    "by": "Administrator"
+                }
+            ]
+        }
+    ]
+}
